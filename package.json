@@ -1,0 +1,14 @@
+{
+  "name": "duff store",
+  "version": "1.0.0",
+  "description": "Minha loja Duff Store",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mercadopago": "^2.0.0",
+    "cors": "^2.8.5"
+  }
+}
