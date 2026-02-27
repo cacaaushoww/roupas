@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sobre Nós - Duff Store</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .sobre-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .sobre-container h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+        }
+
+        .sobre-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .sobre-container p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #888;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 32px;
+            transition: color 0.2s;
+        }
+
+        .btn-voltar:hover { color: #1a1a1a; }
+
+        .valores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .valor-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .valor-card i {
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .valor-card strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .valor-card span {
+            font-size: 0.78rem;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        .btn-whatsapp-contato {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: #25d366;
+            color: #fff;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-top: 24px;
+        }
+
+        .btn-whatsapp-contato i { font-size: 1.3rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" style="text-decoration:none; color:#1a1a1a; font-size:1.5rem;">
+                <i class="ph ph-arrow-left"></i>
+            </a>
+            <h1 class="logo">DUFF STORE</h1>
+            <div style="width:24px"></div>
+        </div>
+    </header>
+
+    <div class="sobre-container">
+
+        <a href="index.html" class="btn-voltar">
+            <i class="ph ph-arrow-left"></i> Voltar à loja
+        </a>
+
+        <h1>Sobre Nós</h1>
+
+        <p>A <strong>Duff Store</strong> nasceu da paixão por moda e pelo desejo de oferecer produtos de qualidade com preços acessíveis para todo o Brasil.</p>
+
+        <p>Somos uma loja especializada em roupas e acessórios esportivos, com foco em atender nossos clientes com agilidade, transparência e um atendimento próximo e humanizado.</p>
+
+        <h2>Nossa Missão</h2>
+        <p>Levar estilo e qualidade para cada cliente, com produtos selecionados, preços justos e uma experiência de compra simples e segura.</p>
+
+        <h2>Nossos Valores</h2>
+        <div class="valores">
+            <div class="valor-card">
+                <i class="ph ph-handshake"></i>
+                <strong>Confiança</strong>
+                <span>Transparência em cada etapa da compra</span>
+            </div>
+            <div class="valor-card">
+                <i class="ph ph-star"></i>
+                <strong>Qualidade</strong>
+                <span>Produtos selecionados com cuidado</span>
+            </div>
+            <div class="valor-card">
+                <i class="ph ph-lightning"></i>
+                <strong>Agilidade</strong>
+                <span>Entrega rápida para todo o Brasil</span>
+            </div>
+            <div class="valor-card">
+                <i class="ph ph-heart"></i>
+                <strong>Atendimento</strong>
+                <span>Suporte humano e próximo via WhatsApp</span>
+            </div>
+        </div>
+
+        <h2>Fale com a Gente</h2>
+        <p>Atendemos de segunda a sábado, das 9h às 20h. Estamos sempre prontos para tirar suas dúvidas e ajudar no que precisar.</p>
+
+        <a href="https://wa.me/5511967363840" target="_blank" class="btn-whatsapp-contato">
+            <i class="ph ph-whatsapp-logo"></i> Falar no WhatsApp
+        </a>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-bottom" style="border-top:none; padding-top:30px;">
+            <p>© 2026 Duff Store | Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

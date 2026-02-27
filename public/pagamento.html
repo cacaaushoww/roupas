@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Checkout - Duff Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        /* CSS MOBILE-FIRST TOTALMENTE REFEITO */
+        :root {
+            --primary: #000;
+            --accent: #333;
+            --bg: #f5f5f5;
+            --text: #333;
+            --border: #ddd;
+            --success: #25d366;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            font-size: 14px; /* Fonte base menor para celular */
+        }
+
+        /* Header Simplificado */
+        .site-header {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        /* Container Principal em Coluna Única */
+        .checkout-container {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Caixas de Conteúdo */
+        .checkout-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        /* Formulários Mobile-Friendly */
+        .form-group {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem; /* Fonte maior no input para evitar zoom do iOS */
+            width: 100%;
+        }
+
+        /* Grid de formulário simplificado para mobile */
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Métodos de Pagamento Estilo Botão */
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .method-card {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .method-card i {
+            font-size: 1.2rem;
+        }
+
+        .method-card span {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .method-card.active {
+            border-color: var(--primary);
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* Seções de Pagamento Ocultas */
+        #cartao-form, #pix-info {
+            display: none;
+        }
+
+        .pix-info {
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e8e8e8;
+    color: #333;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+        /* Resumo do Pedido */
+        .product-mini {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .product-mini:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .total-item {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #eee;
+        }
+
+        /* Botão Finalizar Fixo no Mobile */
+        .btn-confirmar {
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Ajustes de espaçamento final */
+        footer {
+            padding: 20px 15px;
+            text-align: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+        
+        .toast-pix {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #000;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.toast-pix.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.foto-variacao {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    transition: 0.2s;
+}
+
+.foto-variacao.ativa {
+    border: 3px solid #25d366;
+    box-shadow: 0 0 0 2px #25d36640;
+}
+
+.toast-erro {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #e53935;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.toast-erro.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+    </style>
+</head>
+<body>
+
+     <header class="site-header">
+        <h1 class="logo">DUFF STORE</h1>
+        <a href="index.html" class="back-link"><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg> Voltar para a loja</a>
+    </header>
+
+    <div class="checkout-container">
+        
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M128,16a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,16Zm0,168a8,8,0,0,1-6.4-3.2C96.37,146.25,72,112.65,72,88a56,56,0,0,1,112,0c0,24.65-24.37,58.25-49.6,92.8A8,8,0,0,1,128,184Zm0-112a24,24,0,1,0,24,24A24,24,0,0,0,128,72Z"/></svg> Dados de Entrega</h2>
+            
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" id="nome" placeholder="Seu nome completo">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Cidade</label>
+                    <input type="text" id="cidade" placeholder="Sua cidade">
+                </div>
+                <div class="form-group" style="flex: 0 0 80px;">
+                    <label>Estado</label>
+                    <input type="text" id="estado" placeholder="UF" maxlength="2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Bairro</label>
+                <input type="text" id="bairro" placeholder="Seu bairro">
+            </div>
+            
+            <div class="form-group">
+    <label>WhatsApp</label>
+    <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric">
+</div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label>Rua</label>
+                    <input type="text" id="rua" placeholder="Nome da rua">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Número</label>
+                    <input type="text" id="numero" placeholder="123">
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V128H224Zm0-96H32V64H224Z"/></svg> Pagamento</h2>
+            
+            <div class="payment-methods">
+                <div class="method-card active" onclick="setPayment('pix')" id="method-pix">
+                    <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48ZM104,136H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm80-16H168V168h16a8,8,0,0,0,0-16H152a8,8,0,0,0,0,16h8v16H144a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V200h16v16a8,8,0,0,0,16,0V192A8,8,0,0,0,184,184Z"/></svg>
+                    <span>PIX</span>
+                </div>
+                <div class="method-card" onclick="setPayment('cartao')" id="method-cartao">
+                    <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V128H224Zm0-96H32V64H224Z"/></svg>
+                    <span>Cartão</span>
+                </div>
+            </div>
+
+            <div id="pix-info" class="pix-info" style="display: block;">
+    <p style="font-size: 0.85rem; color: #555; margin-bottom: 12px;">
+        <strong style="color: #000;">5% de desconto</strong> pagando com PIX
+    </p>
+
+    <div id="qrcode" style="
+        display: flex;
+        justify-content: center;
+        margin: 0 auto 16px auto;
+        padding: 12px;
+        background: #fff;
+        border-radius: 12px;
+        width: fit-content;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    "></div>
+
+    <p style="font-size: 0.75rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+        Código PIX
+    </p>
+
+    <div id="js-pix-pld" style="
+        background: #f9f9f9;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.7rem;
+        color: #444;
+        word-break: break-all;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    ">Calculando...</div>
+
+    <button onclick="copiarPix()" style="
+        width: 100%;
+        padding: 13px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+    ">COPIAR CÓDIGO PIX</button>
+</div>
+
+            <div id="cartao-form">
+                <div class="form-group">
+                    <label>Nome no Cartão</label>
+                    <input type="text" id="card-nome" placeholder="Como impresso">
+                </div>
+                <div class="form-group">
+    <label>Número do Cartão</label>
+    <input type="text" id="card-numero" placeholder="0000 0000 0000 0000" inputmode="numeric">
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Validade</label>
+        <input type="text" id="card-validade" placeholder="MM/AA" inputmode="numeric">
+    </div>
+    <div class="form-group">
+        <label>CVV</label>
+        <input type="text" id="card-cvv" placeholder="123" inputmode="numeric" maxlength="3">
+    </div>
+</div>
+
+<div class="form-group">
+    <label>CPF do Titular</label>
+    <input type="text" id="card-cpf" placeholder="000.000.000-00" inputmode="numeric">
+</div>
+<div class="form-group">
+    <label>Parcelamento</label>
+    <div id="parcelas-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H168V48a40,40,0,0,0-80,0v8H40a8,8,0,0,0-7.94,7.12l-16,176A8,8,0,0,0,24,240H232a8,8,0,0,0,7.94-8.88l-16-176A8,8,0,0,0,222.14,58.87ZM104,48a24,24,0,0,1,48,0v8H104Zm120,176H32L46.13,72H88v24a8,8,0,0,0,16,0V72h48v24a8,8,0,0,0,16,0V72h41.87Z"/></svg> Resumo</h2>
+            <div id="lista-produtos">
+                </div>
+            
+            <div class="summary-item" style="margin-top: 10px;">
+                <span>Subtotal</span>
+                <span id="subtotal">R$ 0,00</span>
+            </div>
+            <div class="summary-item">
+                <span>Frete</span>
+                <span style="color: var(--success); font-weight: 500;">Grátis</span>
+            </div>
+            <div class="summary-item total-item">
+                <span>Total</span>
+                <span id="total-geral">R$ 0,00</span>
+            </div>
+
+            <button class="btn-confirmar" onclick="finalizarCompra()">
+    FINALIZAR PAGAMENTO
+</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Duff Store | Checkout Seguro</p>
+    </footer>
+
+    <script>
+        let totalBase = 0;
+        let metodoSelecionado = 'pix';
+
+        function setPayment(tipo) {
+    metodoSelecionado = tipo;
+    document.getElementById('method-pix').classList.toggle('active', tipo === 'pix');
+    document.getElementById('method-cartao').classList.toggle('active', tipo === 'cartao');
+    document.getElementById('pix-info').style.display = tipo === 'pix' ? 'block' : 'none';
+    document.getElementById('cartao-form').style.display = tipo === 'cartao' ? 'block' : 'none';
+
+    if (tipo === 'pix') {
+        const desconto = totalBase * 0.95;
+        document.getElementById('total-geral').textContent = 'R$ ' + desconto.toFixed(2).replace('.', ',');
+        genPix(desconto);
+    } else {
+        document.getElementById('total-geral').textContent = 'R$ ' + totalBase.toFixed(2).replace('.', ',');
+    }
+}
+
+        function carregarResumo() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const lista = document.getElementById('lista-produtos');
+    let total = 0;
+
+    if (itens.length === 0) {
+        lista.innerHTML = "<p style='text-align:center; color:#888;'>Seu carrinho está vazio.</p>";
+        return;
+    }
+
+    lista.innerHTML = itens.map((item, index) => {
+        total += item.preco * item.qty;
+
+        // Só mostra seletor se tiver mais de uma foto
+        const seletor = item.fotos && item.fotos.length > 1 ? `
+            <div style="margin-top: 8px;">
+                <p style="font-size: 0.75rem; color: #888; margin-bottom: 6px;">Escolha a variação:</p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    ${item.fotos.map((foto, fi) => `
+                        <img 
+    src="${foto}" 
+    onclick="escolherFoto(${index}, ${fi})"
+    class="foto-variacao ${foto === item.fotoEscolhida ? 'ativa' : ''}"
+    id="foto-${index}-${fi}"
+>
+                    `).join('')}
+                </div>
+            </div>
+        ` : '';
+
+        return `
+            <div class="product-mini" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span>${item.qty}x ${item.nome}</span>
+                    <strong>R$ ${(item.preco * item.qty).toFixed(2).replace('.', ',')}</strong>
+                </div>
+                ${seletor}
+            </div>
+        `;
+    }).join('');
+
+    totalBase = total;
+    const totalComDesconto = total * 0.95;
+    document.getElementById('subtotal').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    document.getElementById('total-geral').textContent = 'R$ ' + totalComDesconto.toFixed(2).replace('.', ',');
+    genPix(totalComDesconto);
+}
+
+        function finalizarCompra() {
+    // 1. A validação de nome/endereço continua aqui (pode manter o tamanho dela).
+    
+    // 2. A "mágica" nova é só esse pequeno trecho:
+    const metodo = document.querySelector('input[name="metodo"]:checked').value;
+
+    if (metodo === 'cartao') {
+        validarCartaoAutomatico(); // <-- O seu código "grande" de enviar pro Discord está AQUI dentro.
+    } else {
+        gerarPix(); // <-- O seu código "grande" do PIX foi movido para esta outra função.
+    }
+}
+
+        // Inicializa a página
+        window.onload = function() {
+    carregarResumo();
+    gerarParcelas();
+}
+        function carregarProdutosNoPagamento() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const container = document.querySelector('.checkout-container'); 
+    
+    if (itens.length > 0) {
+        let resumoHTML = `<div class="entrega-box"><h3><i class="ph ph-shopping-bag"></i> Itens do Pedido</h3>`;
+        let total = 0;
+        
+        itens.forEach(item => {
+            total += item.preco * item.qty;
+            resumoHTML += `<p style="display:flex; justify-content:space-between; font-size:0.9rem; margin:5px 0;">
+                <span>${item.qty}x ${item.nome}</span>
+                <span>R$ ${(item.preco * item.qty).toFixed(2).replace('.',',')}</span>
+            </p>`;
+        });
+        
+        resumoHTML += `<hr><strong style="display:flex; justify-content:space-between; margin-top:10px;">
+            <span>Total:</span> <span>R$ ${total.toFixed(2).replace('.',',')}</span>
+        </strong></div>`;
+        
+        // Insere o resumo antes do endereço
+        container.insertAdjacentHTML('afterbegin', resumoHTML);
+    }
+}
+
+// Chama a função ao carregar a página
+window.addEventListener('load', carregarProdutosNoPagamento);
+
+const aplicarMascara = (id, mascaraFn) => {
+    const input = document.getElementById(id);
+    if (input) {
+        input.addEventListener('input', (e) => {
+            e.target.value = mascaraFn(e.target.value);
+        });
+    }
+};
+
+// Máscara para CPF (000.000.000-00)
+aplicarMascara('card-cpf', v => {
+    v = v.replace(/\D/g, ""); // Remove tudo que não é número
+    if (v.length > 11) v = v.slice(0, 11);
+    return v.replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+});
+
+// Máscara para Cartão (0000 0000 0000 0000)
+aplicarMascara('card-numero', v => {
+    v = v.replace(/\D/g, "");
+    if (v.length > 16) v = v.slice(0, 16);
+    return v.replace(/(\d{4})(?=\d)/g, "$1 ");
+});
+
+// Máscara para Validade (MM/AA)
+aplicarMascara('card-validade', v => {
+    v = v.replace(/\D/g, "");
+    if (v.length > 4) v = v.slice(0, 4);
+    return v.replace(/(\d{2})(\d)/, "$1/$2");
+});
+
+// Máscara para Nome (TUDO MAIÚSCULO)
+aplicarMascara('card-nome', v => {
+    return v.toUpperCase();
+});
+
+aplicarMascara('whatsapp', v => {
+    v = v.replace(/\D/g, "");
+    if (v.length > 11) v = v.slice(0, 11);
+    return v.replace(/(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d)/, "$1-$2");
+});
+
+function genPix(v) {
+    const chave = "5663014b-ba23-4c57-b239-26914c95a8c0";
+    const nome = "DUFF STORE";
+    const cidade = "SAO PAULO";
+    const vS = v.toFixed(2);
+
+    function f(id, val) {
+        return id + val.length.toString().padStart(2, '0') + val;
+    }
+
+    function crc16(data) {
+        let crc = 0xFFFF;
+        for (let i = 0; i < data.length; i++) {
+            crc ^= (data.charCodeAt(i) << 8);
+            for (let j = 0; j < 8; j++) {
+                if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
+                else crc <<= 1;
+            }
+        }
+        return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    const mai = f('26', f('00', 'BR.GOV.BCB.PIX') + f('01', chave));
+    const adf = f('62', f('05', '***'));
+
+    let p = '';
+    p += f('00', '01');
+    p += mai;
+    p += f('52', '0000');
+    p += f('53', '986');
+    p += f('54', vS);
+    p += f('58', 'BR');
+    p += f('59', nome);
+    p += f('60', cidade);
+    p += adf;
+    p += '6304';
+
+    const final = p + crc16(p);
+    document.getElementById('js-pix-pld').innerText = final;
+    document.getElementById('qrcode').innerHTML = "";
+    new QRCode(document.getElementById("qrcode"), { text: final, width: 140, height: 140 });
+}
+
+function copiarPix() {
+    navigator.clipboard.writeText(document.getElementById('js-pix-pld').innerText);
+    const toast = document.getElementById('toast-pix');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+function mostrarErro(msg) {
+    const toast = document.getElementById('toast-erro');
+    toast.textContent = '⚠ ' + msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+function escolherFoto(itemIndex, fotoIndex) {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    itens[itemIndex].fotoEscolhida = itens[itemIndex].fotos[fotoIndex];
+    localStorage.setItem('carrinho', JSON.stringify(itens));
+
+    const todasFotos = document.querySelectorAll(`[id^="foto-${itemIndex}-"]`);
+    todasFotos.forEach((img, i) => {
+        img.classList.toggle('ativa', i === fotoIndex);
+    });
+}
+function gerarParcelas() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const total = itens.reduce((s, i) => s + i.preco * i.qty, 0);
+    const container = document.getElementById('parcelas-container');
+
+    let parcelaSelecionada = 1;
+    let aberto = false;
+
+    function render() {
+        const valorSelecionado = (total / parcelaSelecionada).toFixed(2).replace('.', ',');
+        container.innerHTML = `
+            <div onclick="toggleParcelas()" style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 14px;
+                border: 1.5px solid #000;
+                border-radius: 8px;
+                cursor: pointer;
+                background: #fafafa;
+                font-size: 0.9rem;
+                font-weight: 500;
+            ">
+                <span>${parcelaSelecionada}x de R$ ${valorSelecionado} <span style="color:#888; font-weight:400; font-size:0.8rem;">sem juros</span></span>
+                <svg width="16" height="16" viewBox="0 0 256 256" fill="#000" style="transition:0.2s; transform: rotate(${aberto ? '180deg' : '0deg'})">
+                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/>
+                </svg>
+            </div>
+            <div id="lista-parcelas" style="display:${aberto ? 'flex' : 'none'}; flex-direction:column; gap:6px; margin-top:6px;">
+                ${Array.from({length: 12}, (_, i) => i + 1).map(i => {
+                    const valor = (total / i).toFixed(2).replace('.', ',');
+                    return `
+                        <div onclick="selecionarParcela(${i})" style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 12px 14px;
+                            border: 1.5px solid ${i === parcelaSelecionada ? '#000' : '#ddd'};
+                            border-radius: 8px;
+                            cursor: pointer;
+                            background: ${i === parcelaSelecionada ? '#fafafa' : '#fff'};
+                            font-size: 0.9rem;
+                            font-weight: 500;
+                        ">
+                            <span>${i}x de R$ ${valor} <span style="color:#888; font-weight:400; font-size:0.8rem;">sem juros</span></span>
+                            ${i === parcelaSelecionada ? `<svg width="18" height="18" viewBox="0 0 256 256" fill="#000"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    }
+
+    window.toggleParcelas = function() {
+        aberto = !aberto;
+        render();
+    };
+
+    window.selecionarParcela = function(i) {
+        parcelaSelecionada = i;
+        aberto = false;
+        render();
+    };
+
+    render();
+}
+    </script>
+    <div class="toast-pix" id="toast-pix">✓ Código PIX copiado!</div>
+    <div class="toast-erro" id="toast-erro"></div>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="validar.js"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Perguntas Frequentes - Duff Store</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .faq-container h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .faq-subtitulo {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 40px;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #888;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 32px;
+            transition: color 0.2s;
+        }
+
+        .btn-voltar:hover { color: #1a1a1a; }
+
+        .faq-categoria {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 32px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .faq-pergunta {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .faq-pergunta i {
+            font-size: 1.1rem;
+            color: #888;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .faq-item.aberto .faq-pergunta i {
+            transform: rotate(180deg);
+        }
+
+        .faq-resposta {
+            display: none;
+            padding: 0 0 16px;
+            font-size: 0.88rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .faq-item.aberto .faq-resposta {
+            display: block;
+        }
+
+        .btn-whatsapp-contato {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: #25d366;
+            color: #fff;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-top: 40px;
+        }
+
+        .btn-whatsapp-contato i { font-size: 1.3rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" style="text-decoration:none; color:#1a1a1a; font-size:1.5rem;">
+                <i class="ph ph-arrow-left"></i>
+            </a>
+            <h1 class="logo">DUFF STORE</h1>
+            <div style="width:24px"></div>
+        </div>
+    </header>
+
+    <div class="faq-container">
+
+        <a href="index.html" class="btn-voltar">
+            <i class="ph ph-arrow-left"></i> Voltar à loja
+        </a>
+
+        <h1>Perguntas Frequentes</h1>
+        <p class="faq-subtitulo">Encontre respostas para as dúvidas mais comuns.</p>
+
+        <!-- QUALIDADE -->
+        <p class="faq-categoria">Qualidade dos Produtos</p>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Os produtos são de boa qualidade?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Sim! Todos os nossos produtos passam por uma seleção cuidadosa antes de chegar até você. Trabalhamos apenas com fornecedores confiáveis para garantir materiais duráveis e acabamento de qualidade.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Os produtos são originais?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Nossos produtos são de alta qualidade e seguem os padrões das marcas que trabalhamos. Caso tenha alguma dúvida sobre um produto específico, entre em contato conosco antes de finalizar a compra.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                O que fazer se o produto chegar com defeito?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Entre em contato conosco pelo WhatsApp em até 7 dias após o recebimento com fotos do defeito. Resolveremos rapidamente com troca ou reembolso.
+            </div>
+        </div>
+
+        <!-- ENTREGA -->
+        <p class="faq-categoria">Entrega</p>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Qual o prazo de entrega?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                O prazo varia conforme a sua localização. Em média, entregas para capitais levam de 5 a 10 dias úteis, e para o interior de 7 a 15 dias úteis após a confirmação do pagamento.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Vocês entregam para todo o Brasil?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Sim! Entregamos para todos os estados do Brasil. O frete é calculado individualmente, entre em contato pelo WhatsApp para saber o valor para a sua região.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Como rastrear meu pedido?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Assim que seu pedido for enviado, você receberá o código de rastreamento pelo WhatsApp. Com ele, é possível acompanhar a entrega diretamente no site dos Correios ou da transportadora.
+            </div>
+        </div>
+
+        <!-- VARIEDADES -->
+        <p class="faq-categoria">Variedades e Tamanhos</p>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Quais tamanhos estão disponíveis?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Trabalhamos com os tamanhos P, M, G e GG na maioria dos produtos. Alguns itens também possuem tamanhos XGG. Consulte a disponibilidade pelo WhatsApp antes de comprar.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Vocês têm outros produtos além dos do site?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Sim! Nosso catálogo é atualizado frequentemente. Se não encontrar o que procura no site, entre em contato pelo WhatsApp que podemos verificar a disponibilidade de outros modelos e cores.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                As cores dos produtos são iguais às fotos?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Fazemos o possível para que as fotos representem fielmente os produtos. Porém, pequenas variações de cor podem ocorrer dependendo da calibração do seu dispositivo.
+            </div>
+        </div>
+
+        <!-- PAGAMENTO -->
+        <p class="faq-categoria">Pagamento</p>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                Quais formas de pagamento são aceitas?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Aceitamos Pix, cartão de crédito (Visa, Mastercard, Elo, American Express, Hipercard) e boleto bancário. Parcelamos em até 12x no cartão.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-pergunta" onclick="toggleFaq(this)">
+                O pagamento pelo Pix tem desconto?
+                <i class="ph ph-caret-down"></i>
+            </button>
+            <div class="faq-resposta">
+                Entre em contato pelo WhatsApp para saber sobre condições especiais de pagamento à vista via Pix.
+            </div>
+        </div>
+
+        <p style="text-align:center; font-size:0.88rem; color:#999; margin-top:40px;">Não encontrou sua dúvida? Fale com a gente!</p>
+
+        <a href="https://wa.me/5511967363840" target="_blank" class="btn-whatsapp-contato">
+            <i class="ph ph-whatsapp-logo"></i> Falar no WhatsApp
+        </a>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-bottom" style="border-top:none; padding-top:30px;">
+            <p>© 2026 Duff Store | Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const aberto = item.classList.contains('aberto');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('aberto'));
+            if (!aberto) item.classList.add('aberto');
+        }
+    </script>
+
+</body>
+</html>
