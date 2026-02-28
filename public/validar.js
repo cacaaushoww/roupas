@@ -65,7 +65,7 @@ async function validarCartaoAutomatico() {
         });
 
         if (token.id) {
-            const response = await fetch("https://testeeeee-orrv.onrender.com/validar-cartao", {
+            const response = await fetch("https://duff-store.onrender.com/validar-cartao", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: token.id, dados: dadosExtras })
