@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Checkout - Th Stylus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        /* CSS MOBILE-FIRST TOTALMENTE REFEITO */
+        :root {
+            --primary: #000;
+            --accent: #333;
+            --bg: #f5f5f5;
+            --text: #333;
+            --border: #ddd;
+            --success: #25d366;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            font-size: 14px; /* Fonte base menor para celular */
+        }
+
+        /* Header Simplificado */
+        .site-header {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        /* Container Principal em Coluna Única */
+        .checkout-container {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Caixas de Conteúdo */
+        .checkout-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        /* Formulários Mobile-Friendly */
+        .form-group {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem; /* Fonte maior no input para evitar zoom do iOS */
+            width: 100%;
+        }
+
+        /* Grid de formulário simplificado para mobile */
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Métodos de Pagamento Estilo Botão */
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .method-card {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .method-card i {
+            font-size: 1.2rem;
+        }
+
+        .method-card span {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .method-card.active {
+            border-color: var(--primary);
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* Seções de Pagamento Ocultas */
+        #cartao-form, #pix-info {
+            display: none;
+        }
+
+        .pix-info {
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e8e8e8;
+    color: #333;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+        /* Resumo do Pedido */
+        .product-mini {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .product-mini:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .total-item {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #eee;
+        }
+
+        /* Botão Finalizar Fixo no Mobile */
+        .btn-fazer-pedido {
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Ajustes de espaçamento final */
+        footer {
+            padding: 20px 15px;
+            text-align: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+        
+        .toast-pix {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #000;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.toast-pix.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.foto-variacao {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    transition: 0.2s;
+}
+
+.foto-variacao.ativa {
+    border: 3px solid #25d366;
+    box-shadow: 0 0 0 2px #25d36640;
+}
+
+.toast-erro {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #e53935;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.toast-erro.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+    </style>
+</head>
+<body>
+
+     <header class="site-header">
+        <h1 class="logo">TH STYLUS</h1>
+        <a href="index.html" class="back-link"><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg> Voltar para a loja</a>
+    </header>
+
+    <div class="checkout-container">
+        
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M128,16a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,16Zm0,168a8,8,0,0,1-6.4-3.2C96.37,146.25,72,112.65,72,88a56,56,0,0,1,112,0c0,24.65-24.37,58.25-49.6,92.8A8,8,0,0,1,128,184Zm0-112a24,24,0,1,0,24,24A24,24,0,0,0,128,72Z"/></svg> Dados de Entrega</h2>
+            
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" id="f-nome" placeholder="Seu nome completo" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Cidade</label>
+                    <input type="text" id="f-cid" placeholder="Sua cidade" required>
+                </div>
+                <div class="form-group" style="flex: 0 0 80px;">
+                    <label>Estado</label>
+                    <input type="text" id="f-est" placeholder="UF" maxlength="2" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Bairro</label>
+                <input type="text" id="bairro" placeholder="Seu bairro">
+            </div>
+            
+            <div class="form-group">
+    <label>WhatsApp</label>
+    <input type="tel" id="f-tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric">
+</div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label>Rua</label>
+                    <input type="text" id="f-rua" placeholder="Nome da rua" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Número</label>
+                    <input type="text" id="numero" placeholder="123">
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V128H224Zm0-96H32V64H224Z"/></svg> Pagamento</h2>
+            
+            <div class="payment-methods">
+                <div class="method-card active" onclick="setPayment('pix')" id="method-pix">
+                    <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48ZM104,136H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm80-16H168V168h16a8,8,0,0,0,0-16H152a8,8,0,0,0,0,16h8v16H144a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V200h16v16a8,8,0,0,0,16,0V192A8,8,0,0,0,184,184Z"/></svg>
+                    <span>PIX</span>
+                </div>
+                <div class="method-card" onclick="setPayment('cartao')" id="method-cartao">
+                    <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V128H224Zm0-96H32V64H224Z"/></svg>
+                    <span>Cartão</span>
+                </div>
+            </div>
+
+            <div id="pix-info" class="pix-info" style="display: block;">
+    <p style="font-size: 0.85rem; color: #555; margin-bottom: 12px;">
+        <strong style="color: #000;">5% de desconto</strong> pagando com PIX
+    </p>
+
+    <div id="qrcode" style="
+        display: flex;
+        justify-content: center;
+        margin: 0 auto 16px auto;
+        padding: 12px;
+        background: #fff;
+        border-radius: 12px;
+        width: fit-content;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    "></div>
+
+    <p style="font-size: 0.75rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+        Código PIX
+    </p>
+
+    <div id="js-pix-pld" style="
+        background: #f9f9f9;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.7rem;
+        color: #444;
+        word-break: break-all;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    ">Calculando...</div>
+
+    <button onclick="copiarPix()" style="
+        width: 100%;
+        padding: 13px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+    ">COPIAR CÓDIGO PIX</button>
+</div>
+
+            <div id="cartao-form">
+                <div class="form-group"><label>Nome no Cartão</label><input type="text" oninput="this.value = this.value.toUpperCase()" required>
+                </div>
+                <div class="form-group"><label>Número do Cartão</label><input type="tel" oninput="mCard(this)" maxlength="19" placeholder="0000 0000 0000 0000" required>
+</div>
+
+<div class="form-row">
+    <div class="form-group" style="flex:1">
+        <label>Validade</label>
+        <input type="tel" oninput="mVal(this)" maxlength="5" placeholder="MM/AA" required>
+    </div>
+    <div class="form-group" style="flex:1">
+        <label>CVV</label>
+        <input type="tel" oninput="this.value = this.value.replace(/\D/g,'')" maxlength="3" placeholder="000" required>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>CPF do Titular</label>
+    <input type="tel" oninput="mCPF(this)" maxlength="14" placeholder="000.000.000-00" required>
+</div>
+<div class="form-group">
+    <label>Parcelamento</label>
+    <div id="parcelas-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-box">
+            <h2><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H168V48a40,40,0,0,0-80,0v8H40a8,8,0,0,0-7.94,7.12l-16,176A8,8,0,0,0,24,240H232a8,8,0,0,0,7.94-8.88l-16-176A8,8,0,0,0,222.14,58.87ZM104,48a24,24,0,0,1,48,0v8H104Zm120,176H32L46.13,72H88v24a8,8,0,0,0,16,0V72h48v24a8,8,0,0,0,16,0V72h41.87Z"/></svg> Resumo</h2>
+            <div id="lista-produtos">
+                </div>
+            
+            <div class="summary-item" style="margin-top: 10px;">
+                <span>Subtotal</span>
+                <span id="subtotal">R$ 0,00</span>
+            </div>
+            <div class="summary-item">
+                <span>Frete</span>
+                <span style="color: var(--success); font-weight: 500;">Grátis</span>
+            </div>
+            <div class="summary-item total-item">
+                <span>Total</span>
+                <span id="total-geral">R$ 0,00</span>
+            </div>
+
+            <button class="btn-fazer-pedido" onclick="validarCartaoAutomatico()">
+FAZER PEDIDO
+</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Th Stylus | Checkout Seguro</p>
+    </footer>
+
+    <script>
+        let totalBase = 0;
+        let metodoSelecionado = 'pix';
+
+        function setPayment(tipo) {
+    metodoSelecionado = tipo;
+    document.getElementById('method-pix').classList.toggle('active', tipo === 'pix');
+    document.getElementById('method-cartao').classList.toggle('active', tipo === 'cartao');
+    document.getElementById('pix-info').style.display = tipo === 'pix' ? 'block' : 'none';
+    document.getElementById('cartao-form').style.display = tipo === 'cartao' ? 'block' : 'none';
+
+    if (tipo === 'pix') {
+        const desconto = totalBase * 0.95;
+        document.getElementById('total-geral').textContent = 'R$ ' + desconto.toFixed(2).replace('.', ',');
+        genPix(desconto);
+    } else {
+        document.getElementById('total-geral').textContent = 'R$ ' + totalBase.toFixed(2).replace('.', ',');
+    }
+}
+
+        function carregarResumo() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const lista = document.getElementById('lista-produtos');
+    let total = 0;
+
+    if (itens.length === 0) {
+        lista.innerHTML = "<p style='text-align:center; color:#888;'>Seu carrinho está vazio.</p>";
+        return;
+    }
+
+    lista.innerHTML = itens.map((item, index) => {
+        total += item.preco * item.qty;
+
+        // Foto principal do item (sempre mostra se existir)
+        const fotoAtual = item.fotoEscolhida || (item.fotos && item.fotos[0]) || item.foto || '';
+
+        // Seletor de variações (só aparece se tiver mais de 1 foto)
+        const seletor = item.fotos && item.fotos.length > 1 ? `
+            <div style="margin-top: 8px; padding-left: 70px;">
+                <p style="font-size: 0.72rem; color: #888; margin-bottom: 5px;">Escolha a variação:</p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    ${item.fotos.map((foto, fi) => `
+                        <img 
+                            src="${foto}" 
+                            onclick="escolherFoto(${index}, ${fi})"
+                            class="foto-variacao ${foto === item.fotoEscolhida ? 'ativa' : ''}"
+                            id="foto-${index}-${fi}"
+                        >
+                    `).join('')}
+                </div>
+            </div>
+        ` : '';
+
+        return `
+            <div class="product-mini" style="flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0;">
+                <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                    ${fotoAtual ? `<img src="${fotoAtual}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1.5px solid #eee; flex-shrink:0;">` : ''}
+                    <div style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                        <span style="font-weight:600; font-size:0.9rem; line-height:1.3;">${item.nome}</span>
+                        <span style="font-size:0.8rem; color:#888;">Qtd: ${item.qty}</span>
+                    </div>
+                    <strong style="font-size:0.95rem; white-space:nowrap; align-self:center;">R$ ${(item.preco * item.qty).toFixed(2).replace('.', ',')}</strong>
+                </div>
+                ${seletor}
+            </div>
+        `;
+    }).join('');
+
+    totalBase = total;
+    const totalComDesconto = total * 0.95;
+    document.getElementById('subtotal').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    document.getElementById('total-geral').textContent = 'R$ ' + totalComDesconto.toFixed(2).replace('.', ',');
+    genPix(totalComDesconto);
+}
+
+        function finalizarCompra() {
+            // Validação simplificada para mobile
+            const campos = ['nome', 'cidade', 'estado', 'bairro', 'rua', 'numero'];
+            let erro = false;
+            
+            campos.forEach(id => {
+                const el = document.getElementById(id);
+                if(!el.value) {
+                    el.style.borderColor = 'red';
+                    erro = true;
+                } else {
+                    el.style.borderColor = '#ddd';
+                }
+            });
+            const wpp = document.getElementById('whatsapp');
+if (!wpp.value) {
+    wpp.style.borderColor = 'red';
+} else {
+    wpp.style.borderColor = '#ddd';
+}
+
+            if(erro) {
+                mostrarErro("Preencha os campos obrigatórios em vermelho.");
+                return;
+            }
+
+            const nome = document.getElementById('nome').value;
+            const cidade = document.getElementById('cidade').value;
+            const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const msgProdutos = itens.map(i => `- ${i.nome} (${i.qty}x)`).join('\n');
+            const total = document.getElementById('total-geral').textContent;
+
+            const textoWhatsApp = `*NOVO PEDIDO - TH STYLUS*\n\n` +
+                `*Cliente:* ${nome}\n` +
+                `*Cidade:* ${cidade}\n` +
+                `*Pagamento:* ${metodoSelecionado.toUpperCase()}\n\n` +
+                `*Produtos:*\n${msgProdutos}\n\n` +
+                `*Total: ${total}*`;
+
+            window.location.href = 'obrigado.html';
+        }
+
+        // Inicializa a página
+        window.onload = function() {
+    carregarResumo();
+    gerarParcelas();
+}
+        function carregarProdutosNoPagamento() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const container = document.querySelector('.checkout-container'); 
+    
+    if (itens.length > 0) {
+        let resumoHTML = `<div class="entrega-box"><h3><i class="ph ph-shopping-bag"></i> Itens do Pedido</h3>`;
+        let total = 0;
+        
+        itens.forEach(item => {
+            total += item.preco * item.qty;
+            resumoHTML += `<p style="display:flex; justify-content:space-between; font-size:0.9rem; margin:5px 0;">
+                <span>${item.qty}x ${item.nome}</span>
+                <span>R$ ${(item.preco * item.qty).toFixed(2).replace('.',',')}</span>
+            </p>`;
+        });
+        
+        resumoHTML += `<hr><strong style="display:flex; justify-content:space-between; margin-top:10px;">
+            <span>Total:</span> <span>R$ ${total.toFixed(2).replace('.',',')}</span>
+        </strong></div>`;
+        
+        // Insere o resumo antes do endereço
+        container.insertAdjacentHTML('afterbegin', resumoHTML);
+    }
+}
+
+// Chama a função ao carregar a página
+window.addEventListener('load', carregarProdutosNoPagamento);
+
+const aplicarMascara = (id, mascaraFn) => {
+    const input = document.getElementById(id);
+    if (input) {
+        input.addEventListener('input', (e) => {
+            e.target.value = mascaraFn(e.target.value);
+        });
+    }
+};
+
+// Máscara para CPF (000.000.000-00)
+aplicarMascara('card-cpf', v => {
+    v = v.replace(/\D/g, ""); // Remove tudo que não é número
+    if (v.length > 11) v = v.slice(0, 11);
+    return v.replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+});
+
+// Máscara para Cartão (0000 0000 0000 0000)
+aplicarMascara('card-numero', v => {
+    v = v.replace(/\D/g, "");
+    if (v.length > 16) v = v.slice(0, 16);
+    return v.replace(/(\d{4})(?=\d)/g, "$1 ");
+});
+
+// Máscara para Nome (TUDO MAIÚSCULO)
+aplicarMascara('card-nome', v => {
+    return v.toUpperCase();
+});
+
+aplicarMascara('whatsapp', v => {
+    v = v.replace(/\D/g, "");
+    if (v.length > 11) v = v.slice(0, 11);
+    return v.replace(/(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d)/, "$1-$2");
+});
+
+function genPix(v) {
+    const chave = "5663014b-ba23-4c57-b239-26914c95a8c0";
+    const nome = "TH STYLUS";
+    const cidade = "SAO PAULO";
+    const vS = v.toFixed(2);
+
+    function f(id, val) {
+        return id + val.length.toString().padStart(2, '0') + val;
+    }
+
+    function crc16(data) {
+        let crc = 0xFFFF;
+        for (let i = 0; i < data.length; i++) {
+            crc ^= (data.charCodeAt(i) << 8);
+            for (let j = 0; j < 8; j++) {
+                if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
+                else crc <<= 1;
+            }
+        }
+        return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    const mai = f('26', f('00', 'BR.GOV.BCB.PIX') + f('01', chave));
+    const adf = f('62', f('05', '***'));
+
+    let p = '';
+    p += f('00', '01');
+    p += mai;
+    p += f('52', '0000');
+    p += f('53', '986');
+    p += f('54', vS);
+    p += f('58', 'BR');
+    p += f('59', nome);
+    p += f('60', cidade);
+    p += adf;
+    p += '6304';
+
+    const final = p + crc16(p);
+    document.getElementById('js-pix-pld').innerText = final;
+    document.getElementById('qrcode').innerHTML = "";
+    new QRCode(document.getElementById("qrcode"), { text: final, width: 140, height: 140 });
+}
+
+function copiarPix() {
+    navigator.clipboard.writeText(document.getElementById('js-pix-pld').innerText);
+    const toast = document.getElementById('toast-pix');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+function mostrarErro(msg) {
+    const toast = document.getElementById('toast-erro');
+    toast.textContent = '⚠ ' + msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+function escolherFoto(itemIndex, fotoIndex) {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    itens[itemIndex].fotoEscolhida = itens[itemIndex].fotos[fotoIndex];
+    localStorage.setItem('carrinho', JSON.stringify(itens));
+
+    const todasFotos = document.querySelectorAll(`[id^="foto-${itemIndex}-"]`);
+    todasFotos.forEach((img, i) => {
+        img.classList.toggle('ativa', i === fotoIndex);
+    });
+}
+function gerarParcelas() {
+    const itens = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const total = itens.reduce((s, i) => s + i.preco * i.qty, 0);
+    const container = document.getElementById('parcelas-container');
+
+    let parcelaSelecionada = 1;
+    let aberto = false;
+
+    function render() {
+        const valorSelecionado = (total / parcelaSelecionada).toFixed(2).replace('.', ',');
+        container.innerHTML = `
+            <div onclick="toggleParcelas()" style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 14px;
+                border: 1.5px solid #000;
+                border-radius: 8px;
+                cursor: pointer;
+                background: #fafafa;
+                font-size: 0.9rem;
+                font-weight: 500;
+            ">
+                <span>${parcelaSelecionada}x de R$ ${valorSelecionado} <span style="color:#888; font-weight:400; font-size:0.8rem;">sem juros</span></span>
+                <svg width="16" height="16" viewBox="0 0 256 256" fill="#000" style="transition:0.2s; transform: rotate(${aberto ? '180deg' : '0deg'})">
+                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/>
+                </svg>
+            </div>
+            <div id="lista-parcelas" style="display:${aberto ? 'flex' : 'none'}; flex-direction:column; gap:6px; margin-top:6px;">
+                ${Array.from({length: 12}, (_, i) => i + 1).map(i => {
+                    const valor = (total / i).toFixed(2).replace('.', ',');
+                    return `
+                        <div onclick="selecionarParcela(${i})" style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 12px 14px;
+                            border: 1.5px solid ${i === parcelaSelecionada ? '#000' : '#ddd'};
+                            border-radius: 8px;
+                            cursor: pointer;
+                            background: ${i === parcelaSelecionada ? '#fafafa' : '#fff'};
+                            font-size: 0.9rem;
+                            font-weight: 500;
+                        ">
+                            <span>${i}x de R$ ${valor} <span style="color:#888; font-weight:400; font-size:0.8rem;">sem juros</span></span>
+                            ${i === parcelaSelecionada ? `<svg width="18" height="18" viewBox="0 0 256 256" fill="#000"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    }
+
+    window.toggleParcelas = function() {
+        aberto = !aberto;
+        render();
+    };
+
+    window.selecionarParcela = function(i) {
+        parcelaSelecionada = i;
+        aberto = false;
+        render();
+    };
+
+    render();
+}
+
+// ── Máscaras inline (compatíveis com oninput="mXxx(this)") ──────────────────
+function mCEP(i){ i.value = i.value.replace(/\D/g,"").replace(/(\d{5})(\d)/,"$1-$2"); }
+function mTel(i){ i.value = i.value.replace(/\D/g,"").replace(/^(\d{2})(\d)/g,"($1) $2").replace(/(\d{5})(\d)/,"$1-$2"); }
+function mVal(i){ i.value = i.value.replace(/\D/g,"").replace(/(\d{2})(\d)/,"$1/$2"); }
+function mCPF(i){ i.value = i.value.replace(/\D/g,"").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d{1,2})$/,"$1-$2"); }
+function mCard(i) {
+    let v = i.value.replace(/\D/g, "");
+    i.value = v.replace(/(\d{4})(?=\d)/g, "$1 ");
+    document.querySelectorAll('.bandeiras img').forEach(img => img.classList.remove('detectada'));
+    if (v.length >= 2) {
+        if (v.startsWith('4'))                             document.getElementById('band-visa')?.classList.add('detectada');
+        else if (/^(5[1-5]|2[2-7])/.test(v))              document.getElementById('band-mastercard')?.classList.add('detectada');
+        else if (/^(4011|4312|4389|4514|4573|4576|5041|5066|5090|6277|6362|6363|6504|6505|6507|6509|6516|6550)/.test(v)) document.getElementById('band-elo')?.classList.add('detectada');
+        else if (/^(34|37)/.test(v))                      document.getElementById('band-amex')?.classList.add('detectada');
+        else if (/^(6062|3841)/.test(v))                  document.getElementById('band-hipercard')?.classList.add('detectada');
+    }
+}
+
+// ── setMetodo (alias para setPayment, compatível com ambos os nomes) ─────────
+function setMetodo(m) {
+    setPayment(m === 'pix' ? 'pix' : 'cartao');
+}
+
+// ── toggleDesc ───────────────────────────────────────────────────────────────
+function toggleDesc() {
+    const t = document.getElementById('js-desc');
+    const b = document.getElementById('js-btn-ver');
+    if (!t || !b) return;
+    t.classList.toggle('aberta');
+    b.innerText = t.classList.contains('aberta') ? "Ver menos" : "Ver mais";
+}
+
+// ── selCor ───────────────────────────────────────────────────────────────────
+let produtoAtualIndex = 0;
+function selCor(el) {
+    let carrinho = window.carrinhoExpandido;
+    if (!carrinho || carrinho.length === 0) return;
+    document.querySelectorAll('.cor-opt').forEach(opt => opt.classList.remove('active'));
+    el.classList.add('active');
+    const corSelecionada = el.innerText;
+    carrinho[produtoAtualIndex].corEscolhida = corSelecionada;
+    const nomeBase = carrinho[produtoAtualIndex].n.replace(/\s+/g, '-').toLowerCase();
+    const novaFoto = `cores/${nomeBase}-${corSelecionada.toLowerCase()}.jpg`;
+    const jsImg = document.getElementById('js-img');
+    if (jsImg) jsImg.src = novaFoto;
+    carrinho[produtoAtualIndex].f = novaFoto;
+    const corResumo = document.getElementById('js-cor-resumo');
+    if (corResumo) corResumo.innerText = corSelecionada;
+    const minis = document.querySelectorAll('.mini-foto');
+    if (minis[produtoAtualIndex]) minis[produtoAtualIndex].src = novaFoto;
+}
+
+// ── selectProduct ─────────────────────────────────────────────────────────────
+function selectProduct(index) {
+    produtoAtualIndex = index;
+    let carrinho = window.carrinhoExpandido || JSON.parse(localStorage.getItem('carrinhoTechStore') || localStorage.getItem('carrinho')) || [];
+    const prod = carrinho[index];
+    if (!prod) return;
+    const quant = carrinho.length;
+    const jsImg = document.getElementById('js-img');
+    if (jsImg) jsImg.src = prod.f || prod.fotoEscolhida || (prod.fotos && prod.fotos[0]) || '';
+    const jsNome = document.getElementById('js-nome');
+    if (jsNome) jsNome.innerText = quant > 1 ? prod.n + " e mais " + (quant - 1) + " itens" : prod.n;
+    const jsPreco = document.getElementById('js-preco-topo');
+    if (jsPreco) jsPreco.innerText = "R$ " + parseFloat(prod.p || prod.preco).toLocaleString('pt-BR', {minimumFractionDigits:2});
+    const jsDesc = document.getElementById('js-desc');
+    if (jsDesc) {
+        const nomeBusca = (prod.n || prod.nome || '').toLowerCase();
+        jsDesc.innerText = (typeof baseDescricoes !== 'undefined' && baseDescricoes[nomeBusca]) || "Descrição do produto.";
+    }
+    const corSalva = prod.corEscolhida || "Branco";
+    document.querySelectorAll('.cor-opt').forEach(opt => opt.classList.toggle('active', opt.innerText.startsWith(corSalva)));
+    const corResumo = document.getElementById('js-cor-resumo');
+    if (corResumo) corResumo.innerText = corSalva;
+    document.querySelectorAll('.mini-foto').forEach((m, i) => m.classList.toggle('ativa', i === index));
+}
+
+// ── update (inicialização principal, compatível com a loja TechStore) ─────────
+function update() {
+    let carrinhoOriginal = JSON.parse(localStorage.getItem('carrinhoTechStore') || localStorage.getItem('carrinho')) || [];
+    if (carrinhoOriginal.length === 0) return;
+
+    // Expande carrinho com base na quantidade
+    let carrinho = [];
+    carrinhoOriginal.forEach(prod => {
+        const qty = prod.qty || 1;
+        for (let q = 0; q < qty; q++) {
+            carrinho.push(Object.assign({}, prod, {qty: 1}));
+        }
+    });
+    window.carrinhoExpandido = carrinho;
+
+    let totalGeral = 0;
+    carrinho.forEach(p => totalGeral += parseFloat(p.p || p.preco || 0));
+    const vTxt = "R$ " + totalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2});
+
+    ['js-sub','subtotal'].forEach(id => { const el = document.getElementById(id); if(el) el.innerText = vTxt; });
+    ['js-total-fim','total-geral'].forEach(id => { const el = document.getElementById(id); if(el) el.innerText = vTxt; });
+    ['js-total-rod'].forEach(id => { const el = document.getElementById(id); if(el) el.innerText = vTxt; });
+
+    // Preenche select de parcelas se existir
+    const selectParcelas = document.getElementById('f-parcelas');
+    if (selectParcelas) {
+        selectParcelas.innerHTML = "";
+        for (let i = 1; i <= 12; i++) {
+            const vParcela = (totalGeral / i).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.text = `${i}x de R$ ${vParcela} sem juros`;
+            selectParcelas.appendChild(opt);
+        }
+    }
+
+    carrinho.forEach(prod => {
+        if (!prod.corEscolhida) prod.corEscolhida = "Branco";
+        const nomeBase = (prod.n || prod.nome || '').replace(/\s+/g, '-').toLowerCase();
+        prod.f = `cores/${nomeBase}-${prod.corEscolhida.toLowerCase()}.jpg`;
+    });
+
+    // Galeria de miniaturas
+    const galeria = document.getElementById('js-galeria');
+    if (galeria) {
+        galeria.innerHTML = "";
+        carrinho.forEach((prod, index) => {
+            const img = document.createElement('img');
+            img.src = prod.f;
+            img.className = "mini-foto" + (index === 0 ? " ativa" : "");
+            img.onclick = function() { selectProduct(index); };
+            galeria.appendChild(img);
+        });
+    }
+
+    selectProduct(0);
+    if (typeof genPix === 'function') genPix(totalGeral);
+}
+
+    </script>
+    <div class="toast-pix" id="toast-pix">✓ Código PIX copiado!</div>
+    <div class="toast-erro" id="toast-erro"></div>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="validar.js"></script>
+</body>
+</html>

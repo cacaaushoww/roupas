@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Th Stylus - Roupas e Acessórios</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Barra de anúncio topo -->
+    <div class="announcement-bar">
+        <div class="announcement-track">
+            <span>🔥 Frete a combinar para todo o Brasil</span>
+            <span>✦</span>
+            <span>💳 Parcele no cartão</span>
+            <span>✦</span>
+            <span>📦 Entrega rápida</span>
+            <span>✦</span>
+            <span>🔥 Frete a combinar para todo o Brasil</span>
+            <span>✦</span>
+            <span>💳 Parcele no cartão</span>
+            <span>✦</span>
+            <span>📦 Entrega rápida</span>
+            <span>✦</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-btn" onclick="abrirMenu()"><i class="ph ph-list"></i></button>
+            <h1 class="logo">TH STYLUS</h1>
+            <div class="header-icons">
+    <button class="search-btn" onclick="abrirBusca()">
+        <i class="ph ph-magnifying-glass"></i>
+    </button>
+    <a href="https://wa.me/5585997661162" target="_blank"><i class="ph ph-whatsapp-logo"></i></a>
+    <button class="cart-icon-btn" onclick="abrirCarrinho()">
+        <i class="ph ph-shopping-bag"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+</div>
+                
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="#conjuntos">tudo</a>
+            <a href="#calcas">Calças &amp; Camisetas</a>
+            <a href="#polos">Polos</a>
+<a href="#bones">Bonés</a>
+            <a href="#promocoes">Promoções</a>
+<a href="#chinelos">Chinelos</a>
+            <a href="#tenis">Tênis</a>
+        </nav>
+    </header>
+    <div class="search-bar" id="searchBar">
+    <div class="search-inner">
+        <i class="ph ph-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Buscar produto..." oninput="buscar(this.value)">
+        <button onclick="fecharBusca()"><i class="ph ph-x"></i></button>
+    </div>
+</div>
+
+<div class="search-vazio" id="searchVazio" style="display:none">
+    <i class="ph ph-smiley-sad"></i>
+    <p>Nenhum produto encontrado para "<span id="searchTermo"></span>"</p>
+</div>
+
+    <main>
+
+        <!-- Conjuntos -->
+        <section class="product-section" id="conjuntos">
+            <div class="section-header">
+                <h2>Conjuntos</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/conjunto_preto.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto completo Nike preto</h3>
+                        <p class="price">R$ 117,90</p>
+                        <p class="installment">Até 12x de R$ 9,82</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/conjunto_promo.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto completo Nike promoção!</h3>
+                        <p class="price">R$ 129,90</p>
+                        <p class="installment">Até 12x de R$ 10,82</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/inverno_drifit.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto inverno Nike Drifit</h3>
+                        <p class="price">R$ 120,00</p>
+                        <p class="installment">Até 12x de R$ 10,00</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/conjunto_nike.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto Nike</h3>
+                        <p class="price">R$ 120,00</p>
+                        <p class="installment">Até 12x de R$ 10,00</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/nike_academy.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto Nike Academy</h3>
+                        <p class="price">R$ 89,99</p>
+                        <p class="installment">Até 12x de R$ 7,49</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/puma.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjunto Puma</h3>
+                        <p class="price">R$ 120,00</p>
+                        <p class="installment">Até 12x de R$ 10,00</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/casa_blanca_1.jpg">
+                        <img src="fotos/casa_blanca_1b.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjuntos Casa Blanca</h3>
+                        <p class="price">R$ 60,50</p>
+                        <p class="installment">Até 12x de R$ 5,04</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/casa_blanca_2.jpg">
+                        <img src="fotos/casa_blanca_2b.jpg">
+                        <img src="fotos/casa_blanca_2c.jpg">
+                        <img src="fotos/casa_blanca_2d.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjuntos Casa Blanca!</h3>
+                        <p class="price">R$ 102,90</p>
+                        <p class="installment">Até 12x de R$ 8,57</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/conjuntos_nike_52.jpg">
+                        <img src="fotos/conjuntos_nike_52b.jpg">
+                        <img src="fotos/conjuntos_nike_52c.jpg">
+                        <img src="fotos/conjuntos_nike_52d.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjuntos Nike</h3>
+                        <p class="price">R$ 52,90</p>
+                        <p class="installment">Até 12x de R$ 4,40</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/conjuntos_nike_sportwear.jpg">
+                        <img src="fotos/conjuntos_nike_sportwear_2.jpg">
+                        <img src="fotos/conjuntos_nike_sportwear_3.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Conjuntos Nike Sportwear!</h3>
+                        <p class="price">R$ 89,99</p>
+                        <p class="installment">Até 12x de R$ 7,49</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Calças e Camisetas -->
+        <section class="product-section" id="calcas">
+            <div class="section-header">
+                <h2>Calças &amp; Camisetas</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/calca_jogador.jpg">
+                        <img src="fotos/calca_jogador_2.jpg">
+                        <img src="fotos/calca_jogador_3.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Calças Jogador em Promoção!</h3>
+                        <p class="price">R$ 59,90</p>
+                        <p class="installment">Até 12x de R$ 4,99</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/padrao_zara.jpg">
+                        <img src="fotos/padrao_zara_2.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Padrão Zara</h3>
+                        <p class="price">R$ 50,90</p>
+                        <p class="installment">Até 12x de R$ 4,24</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="product-section" id="polos">
+            <div class="section-header">
+                <h2>Polos</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/polo_1.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Polo Preta</h3>
+                        <p class="price">R$ 89,90</p>
+                        <p class="installment">Até 12x de R$ 0,00</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+                <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/polo_2.jpg">
+            </div>
+            <div class="info">
+                <h3>Polo Club Unisex</h3>
+                <p class="price">R$ 110,00</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+            </div>
+        </section>
+
+        <!-- Bonés -->
+        <section class="product-section" id="bones">
+    <div class="section-header">
+        <h2>Bonés</h2>
+    </div>
+    <div class="product-grid">
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_1.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Lv Estonado</h3>
+                <p class="price">R$ 83,99</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_2.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné De Grife Importado Exclusivo Unissex Gucci</h3>
+                <p class="price">R$ 374,19</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_3.jpg">
+            </div>
+            <div class="info">
+                <h3>Bone louis vuitton
+                </h3>
+                <p class="price">R$ 65,00</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_4.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Gucci Jacquard Canvas</h3>
+                <p class="price">R$ 329,00</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_5.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Lacoste SPORT Preto</h3>
+                <p class="price">R$ 332,00</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_6.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Puma Aba Curva Logo</h3>
+                <p class="price">R$ 123,99</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_7.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Lacoste Gabardine Cor Branco</h3>
+                <p class="price">R$ 139,00</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="image-box slider">
+                <img src="fotos/bone_8.jpg">
+            </div>
+            <div class="info">
+                <h3>Boné Lacoste Sport Listra Azul marinho</h3>
+                <p class="price">R$ 84,90</p>
+                <p class="installment">Até 12x de R$ 0,00</p>
+                <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+        <!-- Promoções -->
+        <section class="product-section promo-section" id="promocoes">
+            <div class="section-header">
+                <h2>Promoções 🔥</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/promo_academy.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>PROMOÇÃO 4 Conjuntos Academy!</h3>
+                        <p class="price">R$ 99,99</p>
+                        <p class="installment">Até 12x de R$ 8,33</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/promo_kit_completo.jpg">
+                        <img src="fotos/promo_kit_completo_2.jpg">
+                      
+                    </div>
+                    <div class="info">
+                        <h3>Promoção Kit Completo ✓</h3>
+                        <p class="price">R$ 89,99</p>
+                        <p class="installment">Até 12x de R$ 7,49</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Chinelos -->
+        <section class="product-section" id="chinelos">
+            <div class="section-header">
+                <h2>Chinelos</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/chinelo_assuna.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Chinelo Nike Assuna</h3>
+                        <p class="price">R$ 40,90</p>
+                        <p class="installment">Até 12x de R$ 3,40</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/assuna_3.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Chinelo Nike Assuna 3.0</h3>
+                        <p class="price">R$ 50,00</p>
+                        <p class="installment">Até 12x de R$ 4,16</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/assuna_preto.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Chinelo Nike Assuna Preto</h3>
+                        <p class="price">R$ 40,90</p>
+                        <p class="installment">Até 12x de R$ 3,40</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Tênis -->
+        <section class="product-section" id="tenis">
+            <div class="section-header">
+                <h2>Tênis</h2>
+            </div>
+            <div class="product-grid">
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/tenis_lv.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Tênis Louis Vuitton Skate</h3>
+                        <p class="price">R$ 140,90</p>
+                        <p class="installment">Até 12x de R$ 11,74</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-box slider">
+                        <img src="fotos/nike_court.jpg">
+                    </div>
+                    <div class="info">
+                        <h3>Tênis Nike Courtvision Impecável!</h3>
+                        <p class="price">R$ 179,90</p>
+                        <p class="installment">Até 12x de R$ 14,99</p>
+                        <button class="btn-add" onclick="adicionarAoCarrinho(this)">Adicionar</button>
+                        <a href="#" class="more-info">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Diferenciais -->
+        <section class="benefits">
+            <div class="benefit">
+                <i class="ph ph-truck"></i>
+                <strong>Frete a Combinar</strong>
+                <span>Entregamos para todo o Brasil</span>
+            </div>
+            <div class="benefit">
+                <i class="ph ph-headset"></i>
+                <strong>Suporte ao Cliente</strong>
+                <span>Atendimento via WhatsApp</span>
+            </div>
+            <div class="benefit">
+                <i class="ph ph-shield-check"></i>
+                <strong>Compra Segura</strong>
+                <span>Site seguro SSL 256 bits</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer id="contato">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Central de Atendimento</h4>
+                <p><strong>Horário:</strong> Seg a Sáb, 9h às 20h</p>
+                <p><strong>WhatsApp:</strong> +55 85 99766-1162</p>
+                <p><strong>E-mail:</strong> thstylus@email.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Dúvidas</h4>
+                <a href="sobre-nos.html">Sobre Nós</a>
+                <a href="https://wa.me/5585997661162" target="_blank">Fale Conosco</a>
+                <a href="perguntas-frequentes.html">Perguntas Frequentes</a>
+            </div>
+            <div class="footer-col">
+                <h4>Institucional</h4>
+                <a href="politica-de-trocas.html">Política de Trocas</a>
+                <a href="politica-de-privacidade.html">Política de Privacidade</a>
+                <h6>Formas de Pagamento</h6>
+            </div>
+            <div class="footer-col">
+                <h4>Formas de Pagamento</h4>
+<div class="payment-icons">
+    <img src="pagamentos/visa.png" alt="Visa">
+    <img src="pagamentos/mastercard.png" alt="Mastercard">
+    <img src="pagamentos/amex.png" alt="American Express">
+    <img src="pagamentos/elo.png" alt="Elo">
+    <img src="pagamentos/hipercard.png" alt="Hipercard">
+    <img src="pagamentos/pix.png" alt="Pix">
+</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Th Stylus | Todos os direitos reservados.</p>
+            <p>Tecnologia RediRedi | Crie seu catálogo digital em minutos.</p>
+        </div>
+    </footer>
+
+    <!-- Botão WhatsApp flutuante -->
+    <a href="https://wa.me/5585997661162" class="btn-whatsapp" target="_blank">
+        <i class="ph ph-whatsapp-logo"></i>
+    </a>
+
+    <script>
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+function abrirCarrinho() {
+    document.getElementById('cartDrawer').classList.add('aberto');
+    document.getElementById('cartOverlay').classList.add('aberto');
+    document.body.classList.add('carrinho-aberto');
+}
+
+function fecharCarrinho() {
+    document.getElementById('cartDrawer').classList.remove('aberto');
+    document.getElementById('cartOverlay').classList.remove('aberto');
+    document.body.classList.remove('carrinho-aberto');
+}
+
+function adicionarAoCarrinho(btn) {
+    const info = btn.closest('.info');
+    const card = btn.closest('.card');
+    const nome = info.querySelector('h3').textContent;
+    const precoTexto = info.querySelector('.price').textContent;
+    const preco = parseFloat(precoTexto.replace('R$ ', '').replace(',', '.'));
+
+    // Pega todas as fotos do produto
+    const fotos = [...card.querySelectorAll('.image-box img')].map(img => img.src);
+
+    const existente = carrinho.find(i => i.nome === nome);
+    if (existente) {
+        existente.qty++;
+    } else {
+        carrinho.push({ nome, preco, qty: 1, fotos, fotoEscolhida: fotos[0] });
+    }
+
+    atualizarCarrinho();
+
+    btn.textContent = '✓ Adicionado!';
+    btn.style.background = '#333';
+    setTimeout(() => {
+        btn.textContent = 'Adicionar';
+        btn.style.background = '';
+    }, 1200);
+
+    abrirCarrinho();
+}
+
+function removerItem(nome) {
+    carrinho = carrinho.filter(i => i.nome !== nome);
+    atualizarCarrinho();
+}
+
+function alterarQty(nome, delta) {
+    const item = carrinho.find(i => i.nome === nome);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) carrinho = carrinho.filter(i => i.nome !== nome);
+    atualizarCarrinho();
+}
+
+function limparCarrinho() {
+    carrinho = [];
+    atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+    // ESTA LINHA É A NOVIDADE: Ela grava o carrinho no navegador sempre que mudas algo
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+    const total = carrinho.reduce((s, i) => s + i.preco * i.qty, 0);
+    const totalQty = carrinho.reduce((s, i) => s + i.qty, 0);
+
+    // Badge
+    const badge = document.getElementById('cartBadge');
+    badge.textContent = totalQty;
+    badge.style.display = totalQty > 0 ? 'flex' : 'none';
+
+    // Lista
+    const lista = document.getElementById('cartItems');
+    const vazio = document.getElementById('cartEmpty');
+    const footer = document.getElementById('cartFooter');
+
+    if (carrinho.length === 0) {
+        lista.innerHTML = '';
+        vazio.style.display = 'flex';
+        footer.style.display = 'none';
+        return;
+    }
+
+    vazio.style.display = 'none';
+    footer.style.display = 'block';
+
+    lista.innerHTML = carrinho.map(item => `
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <h4>${item.nome}</h4>
+                <span>R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
+            </div>
+            <div class="cart-item-qty">
+                <button onclick="alterarQty('${item.nome.replace(/'/g,"\\'")}', -1)">−</button>
+                <span>${item.qty}</span>
+                <button onclick="alterarQty('${item.nome.replace(/'/g,"\\'")}', +1)">+</button>
+            </div>
+            <button class="cart-item-remove" onclick="removerItem('${item.nome.replace(/'/g,"\\'")}')">
+                <i class="ph ph-trash"></i>
+            </button>
+        </div>
+    `).join('');
+
+    // Total
+    document.getElementById('cartTotal').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+    // Link WhatsApp
+    const msg = carrinho.map(i => `• ${i.nome} x${i.qty} = R$ ${(i.preco*i.qty).toFixed(2).replace('.',',')}`).join('\n');
+    const texto = `Olá! Tenho interesse nos seguintes produtos:\n\n${msg}\n\n*Total: R$ ${total.toFixed(2).replace('.',',')}*`;
+    
+}
+
+// Inicia badge zerado
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('cartBadge').style.display = 'none';
+});
+function abrirMenu() {
+    document.getElementById('menuDrawer').classList.add('aberto');
+    document.getElementById('menuOverlay').classList.add('aberto');
+}
+function fecharMenu() {
+    document.getElementById('menuDrawer').classList.remove('aberto');
+    document.getElementById('menuOverlay').classList.remove('aberto');
+}
+
+document.querySelectorAll('.image-box.slider').forEach(slider => {
+        const imgs = slider.querySelectorAll('img');
+        if (imgs.length <= 1) return;
+        const dots = document.createElement('div');
+        dots.className = 'dots';
+        imgs.forEach((_, i) => {
+            const dot = document.createElement('span');
+            if (i === 0) dot.classList.add('active');
+            dots.appendChild(dot);
+        });
+        slider.parentElement.insertBefore(dots, slider.nextSibling);
+        slider.addEventListener('scroll', () => {
+            const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+            dots.querySelectorAll('span').forEach((d, i) => {
+                d.classList.toggle('active', i === index);
+            });
+        });
+    });
+    
+    function abrirBusca() {
+    document.getElementById('searchBar').classList.add('aberto');
+    document.getElementById('searchInput').focus();
+}
+
+function fecharBusca() {
+    document.getElementById('searchBar').classList.remove('aberto');
+    document.getElementById('searchInput').value = '';
+    buscar('');
+}
+
+function removerAcentos(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+function buscar(termo) {
+    const cards = document.querySelectorAll('.card');
+    const sections = document.querySelectorAll('.product-section');
+    const vazio = document.getElementById('searchVazio');
+    const t = termo.toLowerCase().trim();
+    let encontrou = 0;
+
+    cards.forEach(card => {
+        const nome = removerAcentos(card.querySelector('h3').textContent.toLowerCase());
+        if (!t || nome.includes(removerAcentos(t))) {
+            card.style.display = '';
+            encontrou++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Esconde seções sem nenhum resultado
+    sections.forEach(sec => {
+        const visiveis = [...sec.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+        sec.style.display = (!t || visiveis) ? '' : 'none';
+    });
+
+    // Mensagem de vazio
+    if (t && encontrou === 0) {
+        vazio.style.display = 'flex';
+        document.getElementById('searchTermo').textContent = termo;
+    } else {
+        vazio.style.display = 'none';
+    }
+}
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.product-section');
+    const links = document.querySelectorAll('.main-nav a');
+    let atual = '';
+    sections.forEach(sec => {
+        const topo = sec.offsetTop - 100;
+        if (window.scrollY >= topo) {
+            atual = sec.getAttribute('id');
+        }
+    });
+    links.forEach(link => {
+        link.classList.remove('ativo');
+        if (link.getAttribute('href') === '#' + atual) {
+            link.classList.add('ativo');
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', atualizarCarrinho);
+    </script>
+    
+    <div class="menu-overlay" id="menuOverlay" onclick="fecharMenu()"></div>
+
+<div class="menu-drawer" id="menuDrawer">
+    <div class="menu-drawer-header">
+        <button class="menu-close-btn" onclick="fecharMenu()"><i class="ph ph-x"></i></button>
+        <span class="logo">TH STYLUS</span>
+        <div class="header-icons">
+</div>
+    </div>
+    <nav class="menu-drawer-nav">
+        <a href="#" onclick="fecharMenu()">Início</a>
+        <a href="#conjuntos" onclick="fecharMenu()">Conjuntos</a>
+        <a href="#calcas" onclick="fecharMenu()">Calças &amp; Camisetas</a>
+        <a href="#chinelos" onclick="fecharMenu()">Chinelos</a>
+        <a href="#tenis" onclick="fecharMenu()">Tênis</a>
+        <a href="#promocoes" onclick="fecharMenu()">Promoções</a>
+        <a href="#contato" onclick="fecharMenu()">Contato</a>
+    </nav>
+    <div class="menu-drawer-help">
+        <p>PRECISA DE AJUDA?</p>
+        <a href="https://wa.me/558597661162" target="_blank">
+            <i class="ph ph-whatsapp-logo"></i>85 99766-1162
+        </a>
+        <a href="mailto:thstylus@gmail.com">
+            <i class="ph ph-envelope"></i> thstylus@gmail.com
+        </a>
+    </div>
+</div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="fecharCarrinho()"></div>
+
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h2>Meu Carrinho</h2>
+        <button class="cart-close" onclick="fecharCarrinho()"><i class="ph ph-x"></i></button>
+    </div>
+
+    <div class="cart-empty" id="cartEmpty">
+        <i class="ph ph-shopping-cart"></i>
+        <p>Seu carrinho está vazio</p>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-footer" id="cartFooter" style="display:none">
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">R$ 0,00</strong>
+        </div>
+        <a href="pagamento.html" class="btn-finalizar">
+    <i class="ph ph-credit-card"></i> Finalizar Pedido
+</a>
+        <button class="btn-limpar" onclick="limparCarrinho()">Limpar carrinho</button>
+    </div>
+</div>
+
+</body>
+</html>
